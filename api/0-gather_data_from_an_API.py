@@ -8,36 +8,38 @@ from sys import argv
 url = "https://jsonplaceholder.typicode.com/users/"
 todos_url = "https://jsonplaceholder.typicode.com/todos/"
 
-""" Fetching user data based on ID """
-response = requests.get(url, {"id": argv[1]})
-if response.status_code == 200:
-    user_data = json.loads(response.text)
-    EMPLOYEE_NAME = (user_data[0]["name"])
+if __name__ == "__main__":
 
-""" Fetching todo list based on ID """
-response = requests.get(todos_url, {"userId": argv[1]})
-if response.status_code == 200:
-    todo_data = json.loads(response.text)
+    """ Fetching user data based on ID """
+    response = requests.get(url, {"id": argv[1]})
+    if response.status_code == 200:
+        user_data = json.loads(response.text)
+        EMPLOYEE_NAME = (user_data[0]["name"])
 
-""" Initializing counters """
-tasks = 0
-completed_tasks = 0
-list_of_tasks = []
+    """ Fetching todo list based on ID """
+    response = requests.get(todos_url, {"userId": argv[1]})
+    if response.status_code == 200:
+        todo_data = json.loads(response.text)
 
-""" Count completed tasks & create a list of their titles """
-for item in todo_data:
-    if item["completed"]:
-        completed_tasks += 1
-        list_of_tasks.append(item["title"])
-    tasks += 1
+    """ Initializing counters """
+    tasks = 0
+    completed_tasks = 0
+    list_of_tasks = []
 
-""" Generate & print to output_format """
-output_format = "Employee {} is done with tasks({}/{}):".format(
-    EMPLOYEE_NAME, completed_tasks, tasks
-)
+    """ Count completed tasks & create a list of their titles """
+    for item in todo_data:
+        if item["completed"]:
+            completed_tasks += 1
+            list_of_tasks.append(item["title"])
+        tasks += 1
 
-print(output_format)
+    """ Generate & print to output_format """
+    output_format = "Employee {} is done with tasks({}/{}):".format(
+        EMPLOYEE_NAME, completed_tasks, tasks
+    )
 
-""" Printing titles of completed tasks with proper indentation """
-for item in list_of_tasks:
-    print("\t {}".format(item))
+    print(output_format)
+
+    """ Printing titles of completed tasks with proper indentation """
+    for item in list_of_tasks:
+        print("\t {}".format(item))
