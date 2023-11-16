@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-""" Task 0, Gathering data from an API """
-import json
+""" basic request to json file """
 from requests import get
 from sys import argv
+import json
+
 
 """ API endpoints """
 url = "https://jsonplaceholder.typicode.com/users/"
@@ -38,5 +39,8 @@ for user_id in range(1, 11):
 
         all_employees_data[str(user_id)] = user_tasks
 
-    with open("todo_all_employees.json", "w") as json_file:
-        json.dump(all_employees_data, json_file, indent=2)
+    def writing_json(dict_to_write):
+        """ Write the input dict to json """
+        file_name = "todo_all_employees.json"
+        with open(file_name, "w") as json_file:
+            json.dump(all_employees_data, json_file)
